@@ -22,6 +22,7 @@
 
 #include "ELuaMemAnalyzerPanel.h"
 #include "EditorStyleSet.h"
+#include "ELuaMonitor.h"
 #include "SMemSnapshotToggle.h"
 #include "Widgets/SWindow.h"
 #include "Widgets/Text/STextBlock.h"
@@ -65,14 +66,13 @@ TSharedRef<class SDockTab> SELuaMemAnalyzerPanel::GetSDockTab()
 
 
     SAssignNew(DockTab, SDockTab)
-    .Icon(FEditorStyle::GetBrush("Kismet.Tabs.Palette"))
     .Label(FText::FromName("ELuaMemAnalyzer"))
     [
         SNew(SVerticalBox)
         + SVerticalBox::Slot().AutoHeight()
         [
             SNew(SBorder).HAlign(HAlign_Center)
-            .BorderImage(FEditorStyle::GetBrush("ToolPanel.GroupBorder"))
+            .BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
             [
                 SNew(SHorizontalBox)
                 + SHorizontalBox::Slot().HAlign(HAlign_Center).VAlign(VAlign_Center).AutoWidth()
@@ -167,6 +167,7 @@ TSharedRef<class SDockTab> SELuaMemAnalyzerPanel::GetSDockTab()
             ]
         ]
     ];
+	DockTab->SetTabIcon(FAppStyle::GetBrush("Kismet.Tabs.Palette"));
     DockTab->SetOnTabClosed(SDockTab::FOnTabClosedCallback::CreateRaw(this, &SELuaMemAnalyzerPanel::OnCloseTab));
     return DockTab.ToSharedRef();
 }
@@ -282,13 +283,27 @@ void SELuaMemAnalyzerPanel::OnCloseTab(TSharedRef<SDockTab> Tab)
 
 FReply SELuaMemAnalyzerPanel::OnSnapshotBtnClicked()
 {
-    FELuaMemAnalyzer::GetInstance()->Snapshot();
+	FELuaMonitorModule* MonitorModule = FELuaMonitorModule::GetInstance();
+	if(nullptr == MonitorModule)
+		return FReply::Handled();
+
+	if(MonitorModule->GetAllWorlds().Num() == 0)
+		return FReply::Handled();
+	
+    FELuaMemAnalyzer::GetInstance()->Snapshot(MonitorModule->GetAllWorlds()[0].Get());
     return FReply::Handled();
 }
 
 FReply SELuaMemAnalyzerPanel::OnGCBtnClicked()
 {
-    FELuaMemAnalyzer::GetInstance()->ForceLuaGC();
+	FELuaMonitorModule* MonitorModule = FELuaMonitorModule::GetInstance();
+	if(nullptr == MonitorModule)
+		return FReply::Handled();
+
+	if(MonitorModule->GetAllWorlds().Num() == 0)
+		return FReply::Handled();
+	
+    FELuaMemAnalyzer::GetInstance()->ForceLuaGC(MonitorModule->GetAllWorlds()[0].Get());
     return FReply::Handled();
 }
 
@@ -309,10 +324,10 @@ const FButtonStyle& SELuaMemAnalyzerPanel::GetToggleStyle(ESnapshotOp ESOP)
 {
     if (FELuaMemAnalyzer::GetInstance()->IsOperateMode(ESOP))
     {
-        return FEditorStyle::Get().GetWidgetStyle<FButtonStyle>("FlatButton.Success");
+        return FAppStyle::Get().GetWidgetStyle<FButtonStyle>("FlatButton.Success");
     } 
     else
     {
-        return FEditorStyle::Get().GetWidgetStyle<FButtonStyle>("FlatButton.Dark");
+        return FAppStyle::Get().GetWidgetStyle<FButtonStyle>("FlatButton.Dark");
     }
 }

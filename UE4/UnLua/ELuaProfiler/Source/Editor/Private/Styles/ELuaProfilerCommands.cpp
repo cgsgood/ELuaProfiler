@@ -22,6 +22,8 @@
 // THE SOFTWARE.
 
 #include "ELuaProfilerCommands.h"
+
+#include "EditorStyleSet.h"
 #if WITH_EDITOR
 #include "EditorStyle.h"
 #endif
@@ -33,7 +35,7 @@ using namespace ELuaProfiler;
 
 FELuaProfilerCommands::FELuaProfilerCommands()
     : TCommands<FELuaProfilerCommands>(ELuaProfiler::ELuaMonitorTabName,
-        NSLOCTEXT("Contexts", "LuaProfiler", "LuaProfiler Plugin"), NAME_None, FEditorStyle::GetStyleSetName())
+        NSLOCTEXT("Contexts", "LuaProfiler", "LuaProfiler Plugin"), NAME_None, FAppStyle::GetAppStyleSetName())
 {
 
 }

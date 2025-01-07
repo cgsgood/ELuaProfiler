@@ -59,14 +59,14 @@ TSharedRef<SWidget> SLuaMonitorTreeWidgetItem::GenerateWidgetForColumn(const FNa
 	else if (ColumnName == NAME_TotalTimeMs )
 	{
 		return 	SNew(STextBlock)
-			.Text(TAttribute<FText>::Create([=]() {
+			.Text(TAttribute<FText>::Create([this]() {
             return FText::AsNumber(this->Info->TotalTime);
         }));
 	}
 	else if (ColumnName == NAME_TotalTimePct )
 	{
 		return 	SNew(STextBlock)
-			.Text(TAttribute<FText>::Create([=]() {
+			.Text(TAttribute<FText>::Create([this]() {
 			if (this->Info->Parent && this->Info->Parent->GCSize > 0)
 			{
 				double d = this->Info->TotalTime / this->Info->Parent->TotalTime;
@@ -78,14 +78,14 @@ TSharedRef<SWidget> SLuaMonitorTreeWidgetItem::GenerateWidgetForColumn(const FNa
 	else if (ColumnName == NAME_SelfTimeMs )
 	{
 		return 	SNew(STextBlock)
-			.Text(TAttribute<FText>::Create([=]() {
+			.Text(TAttribute<FText>::Create([this]() {
             return FText::AsNumber(this->Info->SelfTime);
         }));
 	}
 	else if (ColumnName == NAME_SelfTimePct )
 	{
 		return 	SNew(STextBlock)
-			.Text(TAttribute<FText>::Create([=]() {
+			.Text(TAttribute<FText>::Create([this]() {
 			if (this->Info->Parent && this->Info->Parent->GCSize > 0)
 			{
 				double d = this->Info->SelfTime / this->Info->TotalTime;
@@ -97,21 +97,21 @@ TSharedRef<SWidget> SLuaMonitorTreeWidgetItem::GenerateWidgetForColumn(const FNa
 	else if (ColumnName == NAME_AverageMs )
 	{
 		return 	SNew(STextBlock)
-			.Text(TAttribute<FText>::Create([=]() {
+			.Text(TAttribute<FText>::Create([this]() {
             return FText::AsNumber(this->Info->Average);
         }));
 	}
 	else if (ColumnName == NAME_AllocKb )
 	{
 		return 	SNew(STextBlock)
-			.Text(TAttribute<FText>::Create([=]() {
+			.Text(TAttribute<FText>::Create([this]() {
             return FText::AsNumber(this->Info->AllocSize);
         }));
 	}
 	else if (ColumnName == NAME_AllocPct )
 	{
 		return 	SNew(STextBlock)
-			.Text(TAttribute<FText>::Create([=]() {
+			.Text(TAttribute<FText>::Create([this]() {
 			if (this->Info->Parent && this->Info->Parent->GCSize > 0)
 			{
 				float p = this->Info->AllocSize / this->Info->Parent->AllocSize;
@@ -123,14 +123,14 @@ TSharedRef<SWidget> SLuaMonitorTreeWidgetItem::GenerateWidgetForColumn(const FNa
 	else if (ColumnName == NAME_GCKb )
 	{
 		return 	SNew(STextBlock)
-			.Text(TAttribute<FText>::Create([=]() {
+			.Text(TAttribute<FText>::Create([this]() {
             return FText::AsNumber(this->Info->GCSize);
         }));
 	}
 	else if (ColumnName == NAME_GCPct )
 	{
 		return 	SNew(STextBlock)
-			.Text(TAttribute<FText>::Create([=]() {
+			.Text(TAttribute<FText>::Create([this]() {
 			if (this->Info->Parent && this->Info->Parent->GCSize > 0)
 			{
 				float p = this->Info->GCSize / this->Info->Parent->GCSize;
@@ -142,7 +142,7 @@ TSharedRef<SWidget> SLuaMonitorTreeWidgetItem::GenerateWidgetForColumn(const FNa
 	else if (ColumnName == NAME_Calls )
 	{
 		return 	SNew(STextBlock)
-			.Text(TAttribute<FText>::Create([=]() {
+			.Text(TAttribute<FText>::Create([this]() {
             return (FText::AsNumber(this->Info->Count));
         }));
 	}

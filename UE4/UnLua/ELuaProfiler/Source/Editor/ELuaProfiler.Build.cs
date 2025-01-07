@@ -30,35 +30,38 @@ public class ELuaProfiler : ModuleRules
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
         // enable exception
         bEnableExceptions = true;
-        bEnforceIWYU = false;
+        IWYUSupport = IWYUSupport.None;
         bEnableUndefinedIdentifierWarnings = false;
 
 
         PublicIncludePaths.AddRange(
             new string []
             {
-                "Editor/Public/ELuaMemAnalyzer",
-                "Editor/Public/ELuaMonitor",
-                "Editor/Public/Styles",
-                "Editor/Public",
-                "Editor/Private/ELuaMemAnalyzer",
-                "Editor/Private/ELuaMonitor",
-                "Editor/Private/Styles",
-                "Editor/Private/"
+                // "Runtime/Public/ELuaMemAnalyzer",
+                // "Runtime/Public/ELuaMonitor",
+                // "Editor/Public/Styles",
+                // "Editor/Public",
+                // "Editor/Private/ELuaMemAnalyzer",
+                // "Editor/Private/ELuaMonitor",
+                // "Editor/Private/Styles",
+                // "Editor/Private/"
             }
         );
 
         PrivateIncludePaths.AddRange(
             new string[]
             {
-                "Editor/Public/ELuaMemAnalyzer",
-                "Editor/Public/ELuaMonitor",
-                "Editor/Public/Styles",
-                "Editor/Public",
-                "Editor/Private/ELuaMemAnalyzer",
-                "Editor/Private/ELuaMonitor",
-                "Editor/Private/Styles",
-                "Editor/Private/"
+                // "Runtime/Public/ELuaMemAnalyzer",
+                // "Runtime/Public/ELuaMonitor",
+                // "Editor/Public/Styles",
+                // "Editor/Public",
+                // "Editor/Private/ELuaMemAnalyzer",
+                // "Editor/Private/ELuaMonitor",
+                // "Editor/Private/Styles",
+                // "Editor/Private/"
+                ModuleDirectory + "/Public/ELuaMonitor/",
+                ModuleDirectory + "/Public/ELuaMemAnalyzer/",
+                ModuleDirectory + "/Public/Styles/",
             }
         );
 

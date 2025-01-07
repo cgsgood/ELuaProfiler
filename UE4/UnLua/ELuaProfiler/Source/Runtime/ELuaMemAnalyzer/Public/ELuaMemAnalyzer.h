@@ -29,7 +29,7 @@
 #if (ENGINE_MAJOR_VERSION >= 4 && ENGINE_MINOR_VERSION >= 20)
 #include "Modules/ModuleManager.h"
 #else
-#include "ModuleManager.h"
+//#include "ModuleManager.h"
 #endif
 
 
@@ -53,11 +53,11 @@ public:
         return &Instance;
     }
 
-    void Snapshot();
+    void Snapshot(UObject* Object);
 
     void PopSnapshot();
 
-    void ForceLuaGC();
+    void ForceLuaGC(UObject* Object);
 
     void OnSnapshotOperate(ESnapshotOp ESOP);
 

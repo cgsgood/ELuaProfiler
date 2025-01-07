@@ -146,7 +146,7 @@ TSharedRef<class SDockTab> SELuaMonitorPanel::GetSDockTab()
     ControllerBar->AddSlot().HAlign(HAlign_Left).VAlign(VAlign_Center).AutoWidth()
     [
         SNew(SButton)
-        .ButtonStyle(FEditorStyle::Get(), "NoBorder")																// 无底图以免按钮发白
+        .ButtonStyle(FAppStyle::Get(), "NoBorder")																// 无底图以免按钮发白
         .ContentPadding(2.0)
         .IsFocusable(false)
         .OnClicked(this, &SELuaMonitorPanel::OnLoadBtnClicked)
@@ -158,7 +158,7 @@ TSharedRef<class SDockTab> SELuaMonitorPanel::GetSDockTab()
     ControllerBar->AddSlot().HAlign(HAlign_Left).VAlign(VAlign_Center).AutoWidth()
     [
         SNew(SButton)
-        .ButtonStyle(FEditorStyle::Get(), "NoBorder")																// 无底图以免按钮发白
+        .ButtonStyle(FAppStyle::Get(), "NoBorder")																// 无底图以免按钮发白
         .ContentPadding(2.0)
         .IsFocusable(false)
         .OnClicked(this, &SELuaMonitorPanel::OnSaveBtnClicked)
@@ -174,7 +174,7 @@ TSharedRef<class SDockTab> SELuaMonitorPanel::GetSDockTab()
     ControllerBar->AddSlot().HAlign(HAlign_Center).VAlign(VAlign_Center).AutoWidth()
     [
         SNew(SButton)
-        .ButtonStyle(FEditorStyle::Get(), "NoBorder")																// 无底图以免按钮发白
+        .ButtonStyle(FAppStyle::Get(), "NoBorder")																// 无底图以免按钮发白
         .ContentPadding(2.0)
         .IsFocusable(false)
         .OnClicked(this, &SELuaMonitorPanel::OnForwardBtnClicked)
@@ -207,14 +207,14 @@ TSharedRef<class SDockTab> SELuaMonitorPanel::GetSDockTab()
     ControllerBar->AddSlot().HAlign(HAlign_Right).VAlign(VAlign_Center).AutoWidth()
     [
         SNew(SButton)
-        .ButtonStyle(FEditorStyle::Get(), "NoBorder")																// 无底图以免按钮发白
+        .ButtonStyle(FAppStyle::Get(), "NoBorder")																// 无底图以免按钮发白
         .ContentPadding(2.0)
         .IsFocusable(false)
         .OnClicked(this, &SELuaMonitorPanel::OnClearBtnClicked)
         .ToolTipText(FText::FromName("Clear and stop monitor"))
         [
             SNew(SImage)
-            .Image(FEditorStyle::GetBrush("Cross"))
+            .Image(FAppStyle::GetBrush("Cross"))
         ]
     ];
 
@@ -223,14 +223,13 @@ TSharedRef<class SDockTab> SELuaMonitorPanel::GetSDockTab()
 
     TSharedPtr<SDockTab> Tab;
     SAssignNew(Tab, SDockTab)
-    .Icon(FEditorStyle::GetBrush("Kismet.Tabs.Palette"))
     .Label(FText::FromName("ELuaMonitor"))
     [
         SAssignNew(MonitorVerticalPanel, SVerticalBox)
         + SVerticalBox::Slot().AutoHeight()
         [
             SNew(SBorder)
-            .BorderImage(FEditorStyle::GetBrush("ToolPanel.GroupBorder"))
+            .BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
             //.BorderBackgroundColor(FLinearColor(.50f, .50f, .50f, 1.0f))
             [
                 ControllerBar.ToSharedRef()
@@ -247,6 +246,7 @@ TSharedRef<class SDockTab> SELuaMonitorPanel::GetSDockTab()
             ]
         ]
     ];
+	Tab->SetTabIcon(FAppStyle::GetBrush("Kismet.Tabs.Palette"));
     Tab->SetOnTabClosed(SDockTab::FOnTabClosedCallback::CreateRaw(this, &SELuaMonitorPanel::OnCloseTab));
     OnModeChanged(DEFAULT_MONITOR_MODE);
     return Tab.ToSharedRef();
@@ -363,31 +363,31 @@ FReply SELuaMonitorPanel::OnNextFrameBtnClicked()
 
 const FSlateBrush* SELuaMonitorPanel::GetOpenFileIcon() const
 {
-    return  FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.OpenLevel").GetIcon();
+    return  FSlateIcon(FAppStyle::GetAppStyleSetName(), "LevelEditor.OpenLevel").GetIcon();
 }
 
 const FSlateBrush* SELuaMonitorPanel::GetSaveFileIcon() const
 {
-    return  FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Save").GetIcon();
+    return  FSlateIcon(FAppStyle::GetAppStyleSetName(), "LevelEditor.Save").GetIcon();
 }
 
 const FSlateBrush* SELuaMonitorPanel::GetPrevFrameIcon() const
 {
-    return  &FEditorStyle::Get().GetWidgetStyle<FButtonStyle>("Animation.Backward_Step").Normal;
+	return FAppStyle::Get().GetBrush("Animation.Backward_Step");
 }
 
 const FSlateBrush* SELuaMonitorPanel::GetForwardIcon() const
 {
     if (FELuaMonitor::GetInstance()->IsRuning())
     {
-        return &FEditorStyle::Get().GetWidgetStyle<FButtonStyle>("Animation.Pause").Normal;
+        return FAppStyle::Get().GetBrush("Animation.Pause");
     }
-    return  &FEditorStyle::Get().GetWidgetStyle<FButtonStyle>("Animation.Forward").Normal;
+	return FAppStyle::Get().GetBrush("Animation.Forward");
 }
 
 const FSlateBrush* SELuaMonitorPanel::GetNextFrameIcon() const
 {
-    return  &FEditorStyle::Get().GetWidgetStyle<FButtonStyle>("Animation.Forward_Step").Normal;
+    return FAppStyle::Get().GetBrush("Animation.Forward_Step");
 }
 
 void SELuaMonitorPanel::OnModeChanged(float InMode)
@@ -422,7 +422,7 @@ void SELuaMonitorPanel::OnGenerateFrameController()
         if (!PrevFrameBtn)
         {
             SAssignNew(PrevFrameBtn, SButton)
-            .ButtonStyle(FEditorStyle::Get(), "NoBorder")																// 无底图以免按钮发白
+            .ButtonStyle(FAppStyle::Get(), "NoBorder")																// 无底图以免按钮发白
             .ContentPadding(2.0)
             .IsFocusable(false)
             .OnClicked(this, &SELuaMonitorPanel::OnPrevFrameBtnClicked)
@@ -435,7 +435,7 @@ void SELuaMonitorPanel::OnGenerateFrameController()
         if (!NextFrameBtn)
         {
             SAssignNew(NextFrameBtn, SButton)
-            .ButtonStyle(FEditorStyle::Get(), "NoBorder")																// 无底图以免按钮发白
+            .ButtonStyle(FAppStyle::Get(), "NoBorder")																// 无底图以免按钮发白
             .ContentPadding(2.0)
             .IsFocusable(false)
             .OnClicked(this, &SELuaMonitorPanel::OnNextFrameBtnClicked)

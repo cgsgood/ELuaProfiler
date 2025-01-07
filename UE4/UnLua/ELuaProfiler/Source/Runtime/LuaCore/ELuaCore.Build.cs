@@ -30,7 +30,7 @@ public class ELuaCore : ModuleRules
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
         // enable exception
         bEnableExceptions = true;
-        bEnforceIWYU = false;
+        IWYUSupport = IWYUSupport.None;
         bEnableUndefinedIdentifierWarnings = false;
 #if UE_4_21_OR_LATER
         PublicDefinitions.Add("ENABLE_ELUAPROFILER");
@@ -42,14 +42,14 @@ public class ELuaCore : ModuleRules
         PublicIncludePaths.AddRange(
             new string []
             {
-                "Runtime/ELuaCore/Public"
+                //"Runtime/LuaCore/Public"
             }
         );
 
         PrivateIncludePaths.AddRange(
             new string[]
             {
-                "Runtime/ELuaCore/Private"
+                "Runtime/LuaCore/Private"
             }
         );
 

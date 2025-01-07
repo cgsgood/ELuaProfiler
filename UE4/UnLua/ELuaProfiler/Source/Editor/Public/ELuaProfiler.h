@@ -26,7 +26,7 @@
 #if (ENGINE_MAJOR_VERSION >= 4 && ENGINE_MINOR_VERSION >= 20)
 #include "Modules/ModuleManager.h"
 #else
-#include "ModuleManager.h"
+//#include "ModuleManager.h"
 #endif
 
 #include "ELuaBase.h"
@@ -59,7 +59,7 @@ private:
 
 private:
     FTickerDelegate TickDelegate;
-    FDelegateHandle TickDelegateHandle;
+    FTSTicker::FDelegateHandle TickDelegateHandle;
     bool m_bTabOpened = false;
     TSharedPtr<class FUICommandList> PluginCommands;
     TSharedPtr<SELuaMonitorPanel> MonitorPanel;

@@ -68,7 +68,7 @@ void SMemSnapshotToggle::Construct(const FArguments& InArgs)
                 + SVerticalBox::Slot().HAlign(HAlign_Center).VAlign(VAlign_Top).AutoHeight()
                 [
                     SNew(SButton)
-                    .ButtonStyle(FEditorStyle::Get(), "NoBorder")
+                    .ButtonStyle(FAppStyle::Get(), "NoBorder")
                     .OnClicked_Lambda([this]()
                     {
                         FELuaMemAnalyzer::GetInstance()->OnDeleteSnapshot(SnapshotIndex);
@@ -76,7 +76,7 @@ void SMemSnapshotToggle::Construct(const FArguments& InArgs)
                     })
                     [
                         SNew(SImage)
-                        .Image(FEditorStyle::GetBrush("Cross"))
+                        .Image(FAppStyle::GetBrush("Cross"))
                     ]
                 ]
 
@@ -113,7 +113,7 @@ int32 SMemSnapshotToggle::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
             AllottedGeometry.ToPaintGeometry(),
             BrushResource,
             ESlateDrawEffect::None,
-            BrushResource->GetTint(InWidgetStyle) * InWidgetStyle.GetColorAndOpacityTint() * BorderBackgroundColor.Get().GetColor(InWidgetStyle)
+            BrushResource->GetTint(InWidgetStyle) * InWidgetStyle.GetColorAndOpacityTint() * GetBorderBackgroundColor().GetColor(InWidgetStyle)
         );
     }
 

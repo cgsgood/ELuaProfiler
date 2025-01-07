@@ -336,9 +336,9 @@ void FELuaMemAnalyzer::update_node_desc(const void* p, const char* desc)
     }
 }
 
-void FELuaMemAnalyzer::Snapshot()
+void FELuaMemAnalyzer::Snapshot(UObject* Object)
 {
-    if (lua_State* L = UnLua::GetState())
+    if (lua_State* L = UnLua::GetState(Object))
     {
         lua_settop(L, 0);
         lua_pushvalue(L, LUA_REGISTRYINDEX);
@@ -399,9 +399,9 @@ TSharedPtr<FELuaMemInfoNode> FELuaMemAnalyzer::GetRoot(int32 Idx /* = -1 */)
     return nullptr;
 }
 
-void FELuaMemAnalyzer::ForceLuaGC()
+void FELuaMemAnalyzer::ForceLuaGC(UObject* Object)
 {
-    if (lua_State* L = UnLua::GetState())
+    if (lua_State* L = UnLua::GetState(Object))
     {
         int32 osize = lua_gc(L, LUA_GCCOUNT, 0);
         lua_gc(L, LUA_GCCOLLECT, 0);

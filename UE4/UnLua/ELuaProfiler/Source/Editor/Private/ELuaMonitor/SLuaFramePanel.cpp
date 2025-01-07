@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 
+#include "EditorStyleSet.h"
 #include "ELuaMonitor.h"
 #include "SELuaFramePanel.h"
 #include "Fonts/FontMeasure.h"
@@ -356,7 +357,7 @@ int32 SELuaFramePanel::OnPaint(const FPaintArgs& Args, const FGeometry& Allotted
 	const TSharedRef<FSlateFontMeasure> FontMeasureService = FSlateApplication::Get().GetRenderer()->GetFontMeasureService();
 	const FSlateFontInfo SummaryFont = FCoreStyle::GetDefaultFontStyle("Regular", 8);
 
-	const FSlateBrush* WhiteBrush = FEditorStyle::Get().GetBrush("WhiteBrush");
+	const FSlateBrush* WhiteBrush = FAppStyle::Get().GetBrush("WhiteBrush");
 
 	const float ViewWidth = AllottedGeometry.Size.X;
 	const float ViewHeight = AllottedGeometry.Size.Y;

@@ -72,7 +72,7 @@ void FELuaProfilerModule::StartupModule()
             .SetMenuType(ETabSpawnerMenuType::Hidden);
 
         TickDelegate = FTickerDelegate::CreateRaw(this, &FELuaProfilerModule::Tick);
-        TickDelegateHandle = FTicker::GetCoreTicker().AddTicker(TickDelegate);
+        TickDelegateHandle = FTSTicker::GetCoreTicker().AddTicker(TickDelegate);
     }
 
     if (GIsEditor)
@@ -110,7 +110,7 @@ void FELuaProfilerModule::ShutdownModule()
 
 void FELuaProfilerModule::OnClickedOpenMonitorPanel()
 {
-#if ENGINE_MINOR_VERSION >= 26
+#if ENGINE_MAJOR_VERSION >= 5 || ENGINE_MINOR_VERSION >= 26
     FGlobalTabmanager::Get()->TryInvokeTab(ELuaProfiler::ELuaMonitorTabName);
 #else
     FGlobalTabmanager::Get()->InvokeTab(ELuaProfiler::ELuaMonitorTabName);
@@ -119,8 +119,8 @@ void FELuaProfilerModule::OnClickedOpenMonitorPanel()
 
 void FELuaProfilerModule::OnClickedOpenMemAnalyzerPanel()
 {
-#if ENGINE_MINOR_VERSION >= 26
-    FGlobalTabmanager::Get()->TryInvokeTab(ELuaProfiler::ELuaMemAnalyzerTabName);
+#if ENGINE_MAJOR_VERSION >= 5 || ENGINE_MINOR_VERSION >= 26
+	FGlobalTabmanager::Get()->TryInvokeTab(ELuaProfiler::ELuaMemAnalyzerTabName);
 #else
     FGlobalTabmanager::Get()->InvokeTab(ELuaProfiler::ELuaMemAnalyzerTabName);
 #endif

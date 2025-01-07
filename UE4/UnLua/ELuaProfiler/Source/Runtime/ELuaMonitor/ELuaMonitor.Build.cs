@@ -30,21 +30,21 @@ public class ELuaMonitor : ModuleRules
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
         // enable exception
         bEnableExceptions = true;
-        bEnforceIWYU = false;
+        IWYUSupport = IWYUSupport.None;
         bEnableUndefinedIdentifierWarnings = false;
 
 
         PublicIncludePaths.AddRange(
             new string []
             {
-                "Runtime/ELuaMonitor/Public"
+                ModuleDirectory + "/Public"
             }
         );
 
         PrivateIncludePaths.AddRange(
             new string[]
             {
-                "Runtime/ELuaMonitor/Private"
+	            ModuleDirectory + "/Private"
             }
         );
 
@@ -61,6 +61,7 @@ public class ELuaMonitor : ModuleRules
                 "Sockets",
                 "Lua",
                 "UnLua",
+                "GsCommon",
                 // ... add private dependencies that you statically link with here ...	
             }
         );

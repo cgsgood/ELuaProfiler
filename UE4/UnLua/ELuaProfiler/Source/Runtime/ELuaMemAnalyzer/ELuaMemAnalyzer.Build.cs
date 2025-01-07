@@ -30,14 +30,14 @@ public class ELuaMemAnalyzer : ModuleRules
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
         // enable exception
         bEnableExceptions = true;
-        bEnforceIWYU = false;
+        IWYUSupport = IWYUSupport.None;
         bEnableUndefinedIdentifierWarnings = false;
 
 
         PublicIncludePaths.AddRange(
             new string []
             {
-                "Runtime/ELuaMemAnalyzer/Public"
+                //"Runtime/ELuaMemAnalyzer/Public"
             }
         );
 

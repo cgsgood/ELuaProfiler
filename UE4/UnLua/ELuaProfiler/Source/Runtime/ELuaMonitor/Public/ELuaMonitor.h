@@ -29,15 +29,26 @@
 #if (ENGINE_MAJOR_VERSION >= 4 && ENGINE_MINOR_VERSION >= 20)
 #include "Modules/ModuleManager.h"
 #else
-#include "ModuleManager.h"
+//#include "ModuleManager.h"
 #endif
 
 
 class FELuaMonitorModule : public IModuleInterface
 {
 public:
-    virtual void StartupModule() override;
-    virtual void ShutdownModule() override;
+	ELUAMONITOR_API static FELuaMonitorModule* GetInstance();
+
+	void StartupModule() override;
+	void ShutdownModule() override;
+
+	void OnWorldAdded(UWorld* World);
+	void OnWorldRemoved(UWorld* World);
+	
+	ELUAMONITOR_API const TArray<TWeakObjectPtr<UWorld>>& GetAllWorlds() const;
+	
+protected:
+	static FELuaMonitorModule* Self;
+	TArray<TWeakObjectPtr<UWorld>> AllWorlds;
 };
 
 enum EMonitorState : uint32
@@ -94,6 +105,7 @@ public:
     void OnPurning(void const* luaptr);
     
     static void OnCommandStart(const TArray<FString>& Args);
+	
 private:
     FELuaMonitor();
     ~FELuaMonitor();
@@ -110,15 +122,15 @@ private:
 
     void OnHookReturn();
 
-    void Init();
+    void Init(UObject* Object);
 
-    void Start();
+    void Start(UObject* Object);
 
-    void Stop();
+    void Stop(UObject* Object);
 
-    void Pause();
+    void Pause(UObject* Object);
 
-    void Resume();
+    void Resume(UObject* Object);
 
     void PerFrameModeUpdate(bool Manual = false);
     
@@ -159,5 +171,6 @@ private:
     static void* RunningCoroutine;
 
     FTickerDelegate TickDelegate;
-    FDelegateHandle TickDelegateHandle;
+    FTSTicker::FDelegateHandle TickDelegateHandle;
+	TWeakObjectPtr<UWorld> MonitorWorld;
 };

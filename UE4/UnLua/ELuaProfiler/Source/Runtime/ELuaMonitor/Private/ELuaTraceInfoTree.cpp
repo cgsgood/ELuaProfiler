@@ -129,9 +129,7 @@ void FELuaTraceInfoTree::CountNodeSelfTime(TSharedPtr<FELuaTraceInfoNode> Node, 
             case TotalTime:
             default:
                 return A->TotalTime == B->TotalTime ? A->CallTime < B->CallTime : A->TotalTime > B->TotalTime;
-                break;
             }
-            return A->TotalTime == B->TotalTime ? A->CallTime < B->CallTime : A->TotalTime > B->TotalTime;
         });
 
         // ifdef CORRECT_TIME sub profiler's own time overhead

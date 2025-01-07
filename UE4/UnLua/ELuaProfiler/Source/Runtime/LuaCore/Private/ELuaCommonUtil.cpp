@@ -72,16 +72,16 @@ static TValue* lua_index2addr(lua_State* L, int idx)
     CallInfo* ci = L->ci;
     if (idx > 0)
     {
-        TValue* o = GETTVALUE(ci->func + idx);
+        TValue* o = GETTVALUE(ci->func.p + idx);
         api_check(L, idx <= ci->top - (ci->func + 1), "unacceptable index");
-        if (o >= GETTVALUE(L->top)) return NONVALIDVALUE;
+        if (o >= GETTVALUE(L->top.p)) return NONVALIDVALUE;
         else return o;
     }
     else if (!ispseudo(idx))
     {
         /* negative index */
         api_check(L, idx != 0 && -idx <= L->top - (ci->func + 1), "invalid index");
-        return GETTVALUE(L->top + idx);
+        return GETTVALUE(L->top.p + idx);
     }
     else if (idx == LUA_REGISTRYINDEX)
         return &G(L)->l_registry;
@@ -90,11 +90,11 @@ static TValue* lua_index2addr(lua_State* L, int idx)
         /* upvalues */
         idx = LUA_REGISTRYINDEX - idx;
         api_check(L, idx <= MAXUPVAL + 1, "upvalue index too large");
-        if (ttislcf(GETTVALUE(ci->func)))
+        if (ttislcf(GETTVALUE(ci->func.p)))
             return NONVALIDVALUE;
         else
         {
-            CClosure* func = clCvalue(GETTVALUE(ci->func));
+            CClosure* func = clCvalue(GETTVALUE(ci->func.p));
             return (idx <= func->nupvalues) ? &func->upvalue[idx - 1] : NONVALIDVALUE;
         }
     }
@@ -332,18 +332,18 @@ double GetTimeMs()
 	return Clock::now().time_since_epoch().count() * 0.000001;
 }
 
-int32 GetStateMemB()
+int32 GetStateMemB(UObject* Object)
 {
-    if (lua_State* L = UnLua::GetState())
+    if (lua_State* L = UnLua::GetState(Object))
     {
         return cast_int(gettotalbytes(G(L)));
     }
     return 0;
 }
 
-float GetStateMemKb()
+float GetStateMemKb(UObject* Object)
 {
-    if (lua_State* L = UnLua::GetState())
+    if (lua_State* L = UnLua::GetState(Object))
     {
         return cast_int(gettotalbytes(G(L))) * 0.001f;
     }
